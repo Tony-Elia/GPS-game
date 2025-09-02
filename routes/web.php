@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/teams', [\App\Http\Controllers\TeamController::class, 'index'])->name('teams.index');
     Route::post('/teams/create', [\App\Http\Controllers\TeamController::class, 'create'])->name('teams.create');
     Route::post('/games', [\App\Http\Controllers\GameController::class, 'create'])->name('games.create');
+    Route::post('/codes/refresh', [\App\Http\Controllers\GameController::class, 'refresh'])->name('refresh.code');
 
     Route::post('/teams', [\App\Http\Controllers\GameController::class, 'apply'])->name('apply');
 });

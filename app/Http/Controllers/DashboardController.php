@@ -28,7 +28,8 @@ class DashboardController extends Controller
                 $code = DB::table('codes')->where('user_id', '=', $team->id)
                     ->where('game_id', '=', $game->id)
                     ->first();
-                $row[$game->id] = $code ? $code->code : ''; // empty if missing
+                $row[$game->id]['code'] = $code ? $code->code : ''; // empty if missing
+                $row[$game->id]['is_redeemed'] = $code ? $code->is_redeemed : false;
             }
 
             $codesMatrix[$team->id]['codes'] = $row;

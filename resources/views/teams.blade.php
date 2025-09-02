@@ -33,7 +33,24 @@
     </style>
 </head>
 <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex flex-col min-h-screen">
+<!-- 🔹 Team number (top left) -->
+<div class="absolute top-3 left-4">
+    <span class="py-2 font-bold text-2xl text-white bg-transparent">
+        {{ auth()->user()->name }}
+    </span>
+</div>
+<div class="absolute top-4 right-4">
+    <a href="{{ route('logout') }}"
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+       class="px-4 py-2 border border-white text-white rounded-md bg-transparent hover:bg-white hover:text-black transition">
+        سجل خروج
+    </a>
 
+    <!-- Hidden logout form -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+        @csrf
+    </form>
+</div>
 <!-- Main Section -->
 <main class="flex-1 flex items-center justify-center text-center px-4">
     @if (isset($game))

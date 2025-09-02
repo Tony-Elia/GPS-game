@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Code;
 use App\Models\Game;
 use App\Models\User;
 use App\Services\CodesServices;
@@ -21,7 +22,7 @@ class GameController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|max:2048', // Optional image upload
+            'image' => 'nullable|image|max:2048', // Optional image upload
         ]);
 
         //handle image upload
@@ -63,5 +64,14 @@ class GameController extends Controller
             }
         }
         return view('teams')->with(['message' => 'ده مش كودك ده كود تيم تاني😏']);
+    }
+
+    public function refresh(Request $request)
+    {
+        Log::info('Refreshing code: ' . $request->code);
+        $code = Code::query()->where('code', $request->code)->first();
+        $code->is_redeemed = 0;
+        Log::info('is code saved: ' . $code->save());
+        return back()->with(['message' => 'Code refreshed successfully!', 'status' => 'success']);
     }
 }

@@ -141,7 +141,20 @@
                     <tr>
                         <td class="border border-gray-300 dark:border-gray-700 px-4 py-2">{{ $team_code['team'] }}</td>
                         @foreach ($team_code['codes'] as $code)
-                            <td class="border border-gray-300 dark:border-gray-700 px-4 py-2">{{ $code }}</td>
+                            <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 {{ $code['is_redeemed'] ? 'text-white' : 'text-gray-300' }}">
+
+                                <a href="{{ route('refresh.code') }}"
+                                   onclick="event.preventDefault(); document.getElementById('refresh-code-{{ $code['code'] }}').submit();"
+                                   class="{{$code['is_redeemed'] ? 'text-red-500' : 'text-white'}}">
+                                    {{ $code['code'] }}
+                                </a>
+
+                                <!-- Hidden logout form -->
+                                <form id="refresh-code-{{ $code['code'] }}" action="{{ route('refresh.code') }}" method="POST" class="hidden">
+                                    @csrf
+                                    <input type="hidden" name="code" value="{{ $code['code'] }}">
+                                </form>
+                            </td>
                         @endforeach
                     </tr>
                     @endforeach
